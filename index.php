@@ -19,6 +19,7 @@ $headline = strtoupper(str_replace(".txt", "", $headline));
 
 // Process the content
 $split_content = explode(PHP_EOL, $content);
+shuffle($split_content);
 $content = "";
 foreach ($split_content as $paragraph) {
     if (!empty($paragraph)) {
