@@ -43,7 +43,7 @@ if (!defined('DEVLOREM')) {
 
     <div id="api" class="footer" style="display: none;">
         <p>Required URL structure:<br/>
-            <code>your-domain.com/api/[int][/p][/json]</code></p>
+            <code><?php echo ($_SERVER["HTTP_HOST"] != "" ? $_SERVER["HTTP_HOST"] : 'domain.com'); ?>/api/[int][/p][/json]</code></p>
         <ul>
             <li>[int] = optional, number of paragraphs you want</li>
             <li>[/p] = optional, select if the <code>&lt;p&gt;</code> tags should be included</li>
