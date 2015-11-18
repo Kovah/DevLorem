@@ -19,6 +19,10 @@ a:active {
     text-decoration: underline;
 }
 
+code {
+    color: #545D66;
+}
+
 .container {
     position: relative;
     margin: 0 auto;
@@ -78,5 +82,12 @@ p:last-child {
 .footer {
     padding: 1rem 0;
     color: #757583;
-    font-size: .75rem;
+    font-size: .8rem;
+}
+.footer p {
+    margin: 0;
+}
+.footer ul {
+    margin: 0.5rem 0;
+    padding-left: 1rem;
 }

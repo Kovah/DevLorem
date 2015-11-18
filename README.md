@@ -32,5 +32,4 @@ Want to contribute more source texts? Please create a pull request for the new f
 
 ------
 
-DevLorem is a project by Kovah (www.Kovah.de)
-Contributors: https://github.com/Kovah/DevLorem/graphs/contributors
+DevLorem is a project by [Kovah](https://kovah.de) | [Contributors](https://github.com/Kovah/DevLorem/graphs/contributors)
