@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+
+body {
+    font-size: 16px;
+    font-family: "Ubuntu Mono", Monaco, Courier, monospace;
+    line-height: 1.25;
+    color: #454553;
+    position: relative;
+}
+
+a {
+    color: #4AA0D5;
+    text-decoration: none;
+}
+a:hover,
+a:focus,
+a:active {
+    color: #4AA0D5;
+    text-decoration: underline;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+}
+.content {
+    padding: 1rem;
+    background: #D8E9F0;
+}
+
+h1 {
+    color: #4AA0D5;
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+button {
+    cursor: pointer;
+    float: right;
+    border: none;
+    margin: 0 0 0 2rem;
+    padding: 0;
+	background: none;
+}
+button:hover {
+    border: none;
+}
+button span{
+    display: none;
+}
+button img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.menu ul {
+    color: #757583;
+    font-size: .75rem;
+    list-style: none;
+    padding-left: 1rem;
+}
+.menu ul li {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+p {
+    margin: 0;
+    margin-bottom: 1rem;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+
+.footer {
+    padding: 1rem 0;
+    color: #757583;
+    font-size: .75rem;
+}
