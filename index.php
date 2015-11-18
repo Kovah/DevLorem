@@ -1,26 +1,23 @@
 <?php
 define("DEVLOREM", true);
 
+// Load the functions
+require_once('functions.php');
+
+// Load the API engine
+require_once('api.php');
+
 // Define needed variables
 $menu_link = "/p";
 $menu_text = "Show Paragraphs";
 $headline = "";
 $content = "";
 
-// Select a random lorem file
-$dir = __DIR__ . "/lorem/";
-$files = glob($dir . "*.*");
-$file = array_rand($files);
-
-// Set output variables
-$content = file_get_contents($files[$file]);
-$headline = str_replace($dir, "", $files[$file]);
-$headline = strtoupper(str_replace(".txt", "", $headline));
+$quotes = getRandomQuotes();
+$split_content = $quotes['content'];
+$headline = $quotes['source'];
 
 // Process the content
-$split_content = explode(PHP_EOL, $content);
-shuffle($split_content);
-$content = "";
 foreach ($split_content as $paragraph) {
     if (!empty($paragraph)) {
         // Check if the p tags should be visible
