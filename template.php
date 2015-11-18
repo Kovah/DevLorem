@@ -54,7 +54,8 @@ if (!defined('DEVLOREM')) {
 </div>
 
 <script>
-    document.getElementById("api-toggle").addEventListener("click", function () {
+    document.getElementById("api-toggle").addEventListener("click", function (e) {
+		e.preventDefault();
         if (document.getElementById("api").style.display === "block") {
             document.getElementById("api").style.display = "none";
         } else {
