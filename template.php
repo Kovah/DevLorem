@@ -37,7 +37,7 @@ if (!defined('DEVLOREM')) {
 
     <div class="footer">
         A Project by <a href="https://kovah.de">Kovah.de</a> | Also available <a href="https://devlorem.kovah.de">online</a> and
-        <a href="#api" id="api-toggle">via API</a> |
+        <a href="#api" id="api-toggle">via API</a> | <a href="https://corporatelorem.kovah.de">Lorem for your clients</a> |
         <a href="https://github.com/Kovah/DevLorem">Contribute</a>
     </div>
 
