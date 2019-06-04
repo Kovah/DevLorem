@@ -31,7 +31,7 @@ code {
 }
 
 .content {
-  padding: 1.5rem;
+  padding: 1rem;
   background: #f4fcfd;
 }
 
@@ -39,6 +39,7 @@ h1 {
   color: #1998a6;
   margin: 0 0 2rem 0;
   font-size: 2rem;
+  line-height: 2rem;
 }
 
 button {
@@ -67,8 +68,7 @@ button svg {
   color: #6b767e;
   font-size: .75rem;
   list-style: none;
-  padding-left: 1rem;
-  margin: 1rem 0;
+  padding: 1rem;
 }
 
 .menu ul li {
@@ -86,7 +86,7 @@ p:after {
   position: absolute;
   top: 0;
   right: 0;
-  padding: .5rem;
+  padding: .4rem .6rem;
   font-size: .75rem;
   background: #67CC8E;
   color: #fff;
@@ -103,7 +103,7 @@ p:last-child {
 }
 
 .footer {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   color: #6b767e;
   font-size: .75rem;
 }
