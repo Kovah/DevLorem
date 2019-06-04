@@ -55,7 +55,7 @@ button:hover {
 button span{
     display: none;
 }
-button img {
+button svg {
     width: 2rem;
     height: 2rem;
 }

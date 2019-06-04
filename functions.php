@@ -5,13 +5,13 @@ if (!defined('DEVLOREM')) {
 
 function getRandomQuotes() {
     // Select a random lorem file
-    $dir = __DIR__ . "/lorem/";
-    $files = glob($dir . "*.*");
+    $dir = __DIR__ . '/lorem/';
+    $files = glob($dir . '*.*');
     $file = array_rand($files);
 
     // Get the file contents and format the source
     $content = file_get_contents($files[$file]);
-    $source = strtoupper(str_replace(".txt", "", str_replace($dir, "", $files[$file])));
+    $source = strtoupper(str_replace('.txt', '', str_replace($dir, '', $files[$file])));
 
     $split_content = explode(PHP_EOL, $content);
     shuffle($split_content);

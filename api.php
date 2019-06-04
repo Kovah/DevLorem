@@ -18,7 +18,7 @@ if (!defined('DEVLOREM')) {
  */
 
 // Split the URL into segments
-$url = array_values(array_filter(explode('/', $_SERVER["REQUEST_URI"])));
+$url = array_values(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
 
 // Process the API if requested
 if (isset($url[0]) && $url[0] === 'api') {
@@ -29,11 +29,11 @@ if (isset($url[0]) && $url[0] === 'api') {
     $split_content = $quotes['content'];
     $source = $quotes['source'];
 
-    if (isset($url[1]) && preg_match("/[0-9]/", $url[1])) {
+    if (isset($url[1]) && preg_match('[0-9].', $url[1])) {
         $split_content = fillOrTrimQuotes($split_content, $url[1]);
     }
 
-    if ((isset($url[2]) && $url[2] === "json") || (isset($url[3]) && $url[3] === "json")) {
+    if ((isset($url[2]) && $url[2] === 'json') || (isset($url[3]) && $url[3] === 'json')) {
         $json_content = array();
 
         // Process the content for JSON output
@@ -41,9 +41,9 @@ if (isset($url[0]) && $url[0] === 'api') {
             if (!empty($paragraph)) {
                 // Check if the p tags should be visible
                 if (isset($url[2]) && $url[2] === "p") {
-                    array_push($json_content, $paragraph);
+                    $json_content[] = $paragraph;
                 } else {
-                    array_push($json_content, preg_replace("/(\<(\/)?p\>)/", "", $paragraph));
+                    $json_content[] = preg_replace("/(\<(\/)?p\>)/", '', $paragraph);
                 }
             }
         }
@@ -56,10 +56,10 @@ if (isset($url[0]) && $url[0] === 'api') {
         foreach ($split_content as $paragraph) {
             if (!empty($paragraph)) {
                 // Check if the p tags should be visible
-                if (isset($url[2]) && $url[2] === "p") {
+                if (isset($url[2]) && $url[2] === 'p') {
                     $content .= $paragraph . ' ';
                 } else {
-                    $content .= preg_replace("/(\<(\/)?p\>)/", "", $paragraph);
+                    $content .= preg_replace("/(\<(\/)?p\>)/", '', $paragraph);
                 }
             }
         }
