@@ -29,18 +29,21 @@ if (isset($url[0]) && $url[0] === 'api') {
     $split_content = $quotes['content'];
     $source = $quotes['source'];
 
+    $outputJson = (isset($url[2]) && $url[2] === 'json') || (isset($url[3]) && $url[3] === 'json');
+    $outputParagraphs = isset($url[2]) && $url[2] === 'p';
+
     if (isset($url[1]) && preg_match('[0-9].', $url[1])) {
         $split_content = fillOrTrimQuotes($split_content, $url[1]);
     }
 
-    if ((isset($url[2]) && $url[2] === 'json') || (isset($url[3]) && $url[3] === 'json')) {
+    if ($outputJson) {
         $json_content = array();
 
         // Process the content for JSON output
         foreach ($split_content as $paragraph) {
             if (!empty($paragraph)) {
                 // Check if the p tags should be visible
-                if (isset($url[2]) && $url[2] === "p") {
+                if ($outputParagraphs) {
                     $json_content[] = $paragraph;
                 } else {
                     $json_content[] = preg_replace("/(\<(\/)?p\>)/", '', $paragraph);
@@ -48,7 +51,8 @@ if (isset($url[0]) && $url[0] === 'api') {
             }
         }
 
-        print_r(json_encode($json_content));
+        header('Content-Type: application/json');
+        echo json_encode($json_content);
 
     } else {
 
@@ -56,7 +60,7 @@ if (isset($url[0]) && $url[0] === 'api') {
         foreach ($split_content as $paragraph) {
             if (!empty($paragraph)) {
                 // Check if the p tags should be visible
-                if (isset($url[2]) && $url[2] === 'p') {
+                if ($outputParagraphs) {
                     $content .= $paragraph . ' ';
                 } else {
                     $content .= preg_replace("/(\<(\/)?p\>)/", '', $paragraph);
@@ -64,7 +68,8 @@ if (isset($url[0]) && $url[0] === 'api') {
             }
         }
 
-        print_r($content);
+        header('Content-Type: text/plain');
+        echo $content;
     }
 
     exit;

@@ -1,93 +1,122 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
-
 body {
-    font-size: 16px;
-    font-family: "Ubuntu Mono", Monaco, Courier, monospace;
-    line-height: 1.25;
-    color: #454553;
-    position: relative;
+  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  line-height: 1.5;
+  color: #2A2C2B;
+  position: relative;
+  overflow-y: scroll;
 }
 
 a {
-    color: #4AA0D5;
-    text-decoration: none;
+  color: #1998a6;
+  text-decoration: none;
 }
+
 a:hover,
 a:focus,
 a:active {
-    color: #4AA0D5;
-    text-decoration: underline;
+  color: #11666f;
+  text-decoration: underline;
 }
 
 code {
-    color: #545D66;
+  color: #083337;
 }
 
 .container {
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 800px;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
 }
+
 .content {
-    padding: 1rem;
-    background: #D8E9F0;
+  padding: 1.5rem;
+  background: #f4fcfd;
 }
 
 h1 {
-    color: #4AA0D5;
-    margin: 0;
-    margin-bottom: 1rem;
-    font-size: 2rem;
+  color: #1998a6;
+  margin: 0 0 2rem 0;
+  font-size: 2rem;
 }
 
 button {
-    cursor: pointer;
-    float: right;
-    border: none;
-    margin: 0 0 0 2rem;
-    padding: 0;
-	background: none;
+  cursor: pointer;
+  float: right;
+  border: none;
+  margin: 0 0 0 2rem;
+  padding: 0;
+  background: none;
 }
+
 button:hover {
-    border: none;
+  border: none;
 }
-button span{
-    display: none;
+
+button span {
+  display: none;
 }
+
 button svg {
-    width: 2rem;
-    height: 2rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .menu ul {
-    color: #757583;
-    font-size: .75rem;
-    list-style: none;
-    padding-left: 1rem;
+  color: #6b767e;
+  font-size: .75rem;
+  list-style: none;
+  padding-left: 1rem;
+  margin: 1rem 0;
 }
+
 .menu ul li {
-    display: inline-block;
-    margin-right: 1rem;
+  display: inline-block;
+  margin-right: 1rem;
 }
 
 p {
-    margin: 0;
-    margin-bottom: 1rem;
+  position: relative;
+  margin: 0 0 1rem;
 }
+
+p:after {
+  content: 'Copied!';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .5rem;
+  font-size: .75rem;
+  background: #67CC8E;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+p.success:after {
+  opacity: 1;
+}
+
 p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .footer {
-    padding: 1rem 0;
-    color: #757583;
-    font-size: .8rem;
+  padding: 2rem 0;
+  color: #6b767e;
+  font-size: .75rem;
 }
+
 .footer p {
-    margin: 0;
+  margin: 0;
 }
+
 .footer ul {
-    margin: 0.5rem 0;
-    padding-left: 1rem;
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+}
+
+.footer + .footer {
+  padding-top: 0;
 }
