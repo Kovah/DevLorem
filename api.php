@@ -14,6 +14,10 @@ if (!defined('DEVLOREM')) {
  * [/json] = output the data in JSON format
  *
  * Example:
+ * domain.com/api/4             will output 4 paragraphs
+ * domain.com/api/4/p           will output 4 paragraphs with <p> tags
+ * domain.com/api/4/json        will output 4 json-encoded paragraphs
+ * domain.com/api/4/p/json      will output 4 json-encoded paragraphs with <p> tags
  *
  */
 
