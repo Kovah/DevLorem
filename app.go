@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Sources struct {
@@ -51,6 +52,11 @@ func getRandomContent(stripParagraphs bool) (string, []string) {
 	}
 
 	parsedLines := strings.Split(parsedContent, "\n")
+
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(parsedLines), func(i, j int) {
+		parsedLines[i], parsedLines[j] = parsedLines[j], parsedLines[i]
+	})
 
 	return source, parsedLines
 }
