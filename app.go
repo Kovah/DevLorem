@@ -14,7 +14,7 @@ type Sources struct {
 
 type Output struct {
 	Source          string
-	Paragraphs      string
+	Paragraphs      []string
 	ShowsParagraphs bool
 }
 
@@ -36,7 +36,7 @@ func getSources() Sources {
 	return sources
 }
 
-func getRandomContent() (string, string) {
+func getRandomContent(stripParagraphs bool) (string, []string) {
 	sources := getSources()
 	source := sources.Sources[rand.Intn(len(sources.Sources))]
 
@@ -45,7 +45,14 @@ func getRandomContent() (string, string) {
 
 	parsedContent := string(content)
 
-	return source, parsedContent
+	if stripParagraphs {
+		parsedContent = strings.ReplaceAll(parsedContent, "<p>", "")
+		parsedContent = strings.ReplaceAll(parsedContent, "</p>", "")
+	}
+
+	parsedLines := strings.Split(parsedContent, "\n")
+
+	return source, parsedLines
 }
 
 func main() {
@@ -53,10 +60,7 @@ func main() {
 	tmpl := template.Must(template.ParseFiles("template.html"))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		source, content := getRandomContent()
-
-		content = strings.ReplaceAll(content, "<p>", "")
-		content = strings.ReplaceAll(content, "</p>", "")
+		source, content := getRandomContent(true)
 
 		output := Output{
 			Source:          strings.TrimSuffix(source, ".txt"),
@@ -68,7 +72,7 @@ func main() {
 	})
 
 	http.HandleFunc("/p", func(w http.ResponseWriter, r *http.Request) {
-		source, content := getRandomContent()
+		source, content := getRandomContent(false)
 
 		output := Output{
 			Source:          strings.TrimSuffix(source, ".txt"),

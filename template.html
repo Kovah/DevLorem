@@ -5,13 +5,19 @@
   <title>DevLorem</title>
 </head>
 <body>
+
 <h1>DevLorem</h1>
 <h2>{{ .Source}}</h2>
-<pre>{{ .Paragraphs }}</pre>
+
+{{ range .Paragraphs }}
+  <p>{{ . }}</p>
+{{ end }}
+
 {{ if .ShowsParagraphs }}
   <a href="/">Hide Paragraphs</a>
 {{ else }}
   <a href="/p">Show Paragraphs</a>
 {{ end }}
+
 </body>
 </html>
