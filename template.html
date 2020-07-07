@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DevLorem</title>
+  <meta charset="UTF-8">
+  <title>DevLorem</title>
 </head>
 <body>
 <h1>DevLorem</h1>
 <h2>{{ .Source}}</h2>
 <pre>{{ .Paragraphs }}</pre>
+{{ if .ShowsParagraphs }}
+  <a href="/">Hide Paragraphs</a>
+{{ else }}
+  <a href="/p">Show Paragraphs</a>
+{{ end }}
 </body>
 </html>
