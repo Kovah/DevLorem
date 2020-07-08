@@ -1,3 +1,24 @@
 @tailwind base;
+
+body {
+  @apply font-mono;
+}
+
+a {
+  @apply text-teal-400;
+}
+
+a:hover {
+  @apply text-teal-200;
+}
+
+a:focus {
+  @apply text-teal-200;
+}
+
+a:active {
+  @apply text-teal-200;
+}
+
 @tailwind components;
 @tailwind utilities;

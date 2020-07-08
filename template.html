@@ -13,9 +13,9 @@
     <h1 class="text-xl font-bold inline-block mr-3">DevLorem</h1>
     <div class="ml-auto text-xs">
       {{ if .ShowsParagraphs }}
-        <a href="/" class="text-teal-400 hover:text-teal-200">Hide &lt;p&gt;</a>
+        <a href="/">Hide &lt;p&gt;</a>
       {{ else }}
-        <a href="/p" class="text-teal-400 hover:text-teal-200">Show &lt;p&gt;</a>
+        <a href="/p">Show &lt;p&gt;</a>
       {{ end }}
     </div>
   </div>
@@ -23,9 +23,15 @@
   <div class="p-4 bg-gray-800 shadow-md rounded">
     <h2 class="text-3xl mb-4">{{ .Source}}</h2>
     {{ range .Paragraphs }}
-      <p class="mb-3">{{ . }}</p>
+      <p class="mb-4">{{ . }}</p>
     {{ end }}
   </div>
+
+  <div class="py-6 px-4 text-xs opacity-75 text-gray-300">
+    A Project by <a href="https://www.kovah.de/">Kovah.de</a> | Also available <a href="https://devlorem.kovah.de/">online</a> |
+    <a href="https://corporatelorem.kovah.de/">Lorem Ipsum for client projects</a> | <a href="https://github.com/Kovah/DevLorem/">Contribute</a>
+  </div>
+
 </div>
 
 </body>
