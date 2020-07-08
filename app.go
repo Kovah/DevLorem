@@ -63,6 +63,9 @@ func getRandomContent(stripParagraphs bool) (string, []string) {
 
 func main() {
 
+	fs := http.FileServer(http.Dir("assets/dist/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	tmpl := template.Must(template.ParseFiles("template.html"))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -89,5 +92,6 @@ func main() {
 		tmpl.Execute(w, output)
 	})
 
-	http.ListenAndServe(":80", nil)
+	err := http.ListenAndServe(":80", nil)
+	check(err)
 }
