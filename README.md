@@ -1,7 +1,7 @@
 # DevLorem
 
-Show paragraphs of real text ready to copy and paste. No more "Lorem ipsum dolor", get some lines from President Obama, 
-Samuel L Jackson, Daisy Ridley or Morgan Freeman.
+Real quotes ready to copy and paste. No more "Lorem ipsum dolor". Get some quotes from President Obama, 
+Samuel L Jackson, Daisy Ridley or Morgan Freeman!
 
 ![Preview Screenshot](/preview.png)
 
@@ -11,16 +11,17 @@ Required URL structure:
 `your-domain.com/api/[int]`
 
 * The results will be returns as Json by default.
+* The maximum allowed amount of quotes is `99`.
 * Append `paragraphs=true` as a query parameter to show paragraph tags in the output.
 * Append `format=text` as a query parameter to get plain text output.
 
 
 #### Examples
 
-* `your-domain.com/api/5` would get you 5 paragraphs in JSON without `<p>` tags
-* `your-domain.com/api/15?paragraphs=true` would get you 15 paragraphs in JSON including the `<p>` tags
-* `your-domain.com/api/30?paragraphs=true&format=text` would get you 100 paragraphs as plain text including the `<p>` tags
-* `your-domain.com/api/60?format=text` would get you 100 paragraphs as plain text without `<p>` tags
+* `your-domain.com/api/5` would get you 5 quotes in JSON without `<p>` tags
+* `your-domain.com/api/15?paragraphs=true` would get you 15 quotes in JSON including the `<p>` tags
+* `your-domain.com/api/30?paragraphs=true&format=text` would get you 30 quotes as plain text including the `<p>` tags
+* `your-domain.com/api/60?format=text` would get you 60 quotes as plain text without `<p>` tags
 
 ---
 
