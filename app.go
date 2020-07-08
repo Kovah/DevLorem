@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -147,6 +148,12 @@ func main() {
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(output)
 		}
+	})
+
+	// Additional API endpoint for returning proper errors if <amount> is larger than 99
+	r.HandleFunc("/api/{amount:[0-9]{3}}", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusBadRequest)
+		io.WriteString(w, "You can only request up to 99 paragraphs in one request.")
 	})
 
 	err := http.ListenAndServe(":80", r)
