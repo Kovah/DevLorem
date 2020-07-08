@@ -9,30 +9,73 @@
 
 <div class="container mx-auto px-2 md:px-4">
 
-  <div class="py-6 px-4 flex items-center">
-    <h1 class="text-xl font-bold inline-block mr-3">DevLorem</h1>
-    <div class="ml-auto text-xs">
+  <div class="py-8 px-6 flex items-center">
+    <h1 class="text-2xl font-bold inline-block mr-6">DevLorem</h1>
+    <div class="ml-auto text-xs text-right">
       {{ if .ShowsParagraphs }}
         <a href="/">Hide &lt;p&gt;</a>
       {{ else }}
         <a href="/p">Show &lt;p&gt;</a>
       {{ end }}
+      <br>
+      <span class="text-gray-500">Click a paragraph to copy it</span>
     </div>
   </div>
 
-  <div class="p-4 bg-gray-800 shadow-md rounded">
-    <h2 class="text-3xl mb-4">{{ .Source}}</h2>
-    {{ range .Paragraphs }}
-      <p class="mb-4">{{ . }}</p>
-    {{ end }}
+  <div class="p-6 bg-gray-800 shadow-lg rounded">
+    <h2 class="text-3xl mb-6">{{ .Source}}</h2>
+    <div class="content">
+      {{ range .Paragraphs }}
+        <p class="mb-4">{{ . }}</p>
+      {{ end }}
+    </div>
   </div>
 
-  <div class="py-6 px-4 text-xs opacity-75 text-gray-300">
-    A Project by <a href="https://www.kovah.de/">Kovah.de</a> | Also available <a href="https://devlorem.kovah.de/">online</a> |
-    <a href="https://corporatelorem.kovah.de/">Lorem Ipsum for client projects</a> | <a href="https://github.com/Kovah/DevLorem/">Contribute</a>
+  <div class="py-8 px-6 text-xs opacity-75 text-gray-500">
+    A Project by <a href="https://www.kovah.de/">Kovah.de</a>
+    | <a href="https://corporatelorem.kovah.de/">Lorem Ipsum for client projects</a>
+    | <a href="https://github.com/Kovah/DevLorem/">Contribute</a>
   </div>
 
 </div>
+
+<script src="/static/clipboard.min.js"></script>
+<script>
+  var paragraphs = document.querySelectorAll('.content p');
+  paragraphs.forEach(function ($paragraph) {
+    var clipboard = new ClipboardJS($paragraph, {
+      text: function (trigger) {
+        return trigger.innerHTML;
+      }
+    });
+
+    clipboard.on('success', function (e) {
+      e.trigger.classList.remove('success');
+      e.trigger.classList.add('success');
+      setTimeout(function () {
+        e.trigger.classList.remove('success');
+      }, 2000);
+    });
+
+    $paragraph.addEventListener('click', function (e) {
+      if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(e.currentTarget);
+        range.select();
+        document.execCommand('copy');
+      } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(e.currentTarget);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('copy');
+      } else {
+        console.warn('Could not select text in node: Unsupported browser.');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

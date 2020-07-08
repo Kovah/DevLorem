@@ -20,5 +20,27 @@ a:active {
   @apply text-teal-200;
 }
 
+.content p {
+  position: relative;
+}
+
+.content p:after {
+   content: 'Copied!';
+   position: absolute;
+   top: 0;
+   right: 0;
+   @apply px-3;
+   @apply py-1;
+   @apply text-sm;
+   @apply rounded;
+   @apply bg-teal-600;
+   opacity: 0;
+   transition: opacity 200ms ease;
+}
+
+.content p.success:after {
+   opacity: 1;
+}
+
 @tailwind components;
 @tailwind utilities;
