@@ -9,7 +9,6 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
-	"strings"
 	texttemplate "text/template"
 	"time"
 )
@@ -18,9 +17,13 @@ type Sources struct {
 	Sources []string
 }
 
+type Source struct {
+	Source     string
+	Paragraphs []string
+}
+
 type Output struct {
-	Source          string
-	Paragraphs      []string
+	Source          Source
 	ShowsParagraphs bool
 }
 
@@ -47,43 +50,43 @@ func getSources() Sources {
 	return sources
 }
 
-func getRandomContent(stripParagraphs bool) (string, []string) {
+func getRandomContent(addParagraphs bool) Source {
 	sources := getSources()
-	source := sources.Sources[rand.Intn(len(sources.Sources))]
+	sourceFile := sources.Sources[rand.Intn(len(sources.Sources))]
 
-	content, err := ioutil.ReadFile("lorem/" + source)
+	content, err := ioutil.ReadFile("lorem/" + sourceFile)
 	check(err)
 
-	parsedContent := string(content)
+	var source Source
+	json.Unmarshal(content, &source)
 
-	if stripParagraphs {
-		parsedContent = strings.ReplaceAll(parsedContent, "<p>", "")
-		parsedContent = strings.ReplaceAll(parsedContent, "</p>", "")
+	if addParagraphs {
+		for i, paragraph := range source.Paragraphs {
+			source.Paragraphs[i] = "<p>" + paragraph + "</p>"
+		}
 	}
 
-	parsedLines := strings.Split(parsedContent, "\n")
-
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(parsedLines), func(i, j int) {
-		parsedLines[i], parsedLines[j] = parsedLines[j], parsedLines[i]
+	rand.Shuffle(len(source.Paragraphs), func(i, j int) {
+		source.Paragraphs[i], source.Paragraphs[j] = source.Paragraphs[j], source.Paragraphs[i]
 	})
 
-	return source, parsedLines
+	return source
 }
 
-func getNumLines(amount int, stripParagraphs bool) (string, []string) {
-	source, lines := getRandomContent(stripParagraphs)
+func getNumLines(amount int, stripParagraphs bool) Source {
+	source := getRandomContent(stripParagraphs)
 
 	// Fill results with random lines from the results by appending random lines
-	for len(lines) < amount {
+	for len(source.Paragraphs) < amount {
 		rand.Seed(time.Now().UnixNano())
-		lines = append(lines, lines[rand.Intn(len(lines))])
+		source.Paragraphs = append(source.Paragraphs, source.Paragraphs[rand.Intn(len(source.Paragraphs))])
 	}
 
 	// Limit number of returned lines to the given amount
-	lines = lines[0:amount]
+	source.Paragraphs = source.Paragraphs[0:amount]
 
-	return source, lines
+	return source
 }
 
 func main() {
@@ -99,11 +102,10 @@ func main() {
 
 	// Handle the base webpage with generated paragraphs
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		source, content := getRandomContent(true)
+		source := getRandomContent(false)
 
 		output := Output{
-			Source:          strings.TrimSuffix(source, ".txt"),
-			Paragraphs:      content,
+			Source:          source,
 			ShowsParagraphs: false,
 		}
 
@@ -112,11 +114,10 @@ func main() {
 
 	// Handle the base webpage with generated paragraphs and show the paragraph tags in the results
 	r.HandleFunc("/p", func(w http.ResponseWriter, r *http.Request) {
-		source, content := getRandomContent(false)
+		source := getRandomContent(true)
 
 		output := Output{
-			Source:          strings.TrimSuffix(source, ".txt"),
-			Paragraphs:      content,
+			Source:          source,
 			ShowsParagraphs: true,
 		}
 
@@ -135,18 +136,13 @@ func main() {
 		amount, err := strconv.Atoi(vars["amount"])
 		check(err)
 
-		source, content := getNumLines(amount, query.Get("paragraphs") != "true")
-
-		output := JsonOutput{
-			Source:     strings.TrimSuffix(source, ".txt"),
-			Paragraphs: content,
-		}
+		source := getNumLines(amount, query.Get("paragraphs") != "true")
 
 		if query.Get("format") == "text" {
-			rawTmpl.Execute(w, output)
+			rawTmpl.Execute(w, source)
 		} else {
 			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(output)
+			json.NewEncoder(w).Encode(source)
 		}
 	})
 

@@ -25,7 +25,7 @@
   <div class="p-6 bg-gray-800 shadow-lg rounded">
     <div class="flex items-center mb-6">
       <h2 class="text-3xl mr-6">
-        {{ .Source}}
+        {{ .Source.Source }}
       </h2>
       <button onclick="window.location.href=window.location.href" title="Reload the page for new texts" class="ml-auto">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-10 h-10">
@@ -35,7 +35,7 @@
       </button>
     </div>
     <div class="content">
-      {{ range .Paragraphs }}
+      {{ range .Source.Paragraphs }}
         <p class="mb-4">{{ . }}</p>
       {{ end }}
     </div>
