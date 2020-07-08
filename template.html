@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="min-h-full bg-gray-900 text-gray-100" style="background-color: #1a202c; color: #f7fafc">
 <head>
   <meta charset="UTF-8">
   <title>DevLorem</title>
@@ -7,18 +7,26 @@
 </head>
 <body>
 
-<h1>DevLorem</h1>
-<h2>{{ .Source}}</h2>
+<div class="container mx-auto px-2 md:px-4">
 
-{{ range .Paragraphs }}
-  <p>{{ . }}</p>
-{{ end }}
+  <div class="py-6 px-4 flex items-center">
+    <h1 class="text-xl font-bold inline-block mr-3">DevLorem</h1>
+    <div class="ml-auto text-xs">
+      {{ if .ShowsParagraphs }}
+        <a href="/" class="text-teal-400 hover:text-teal-200">Hide &lt;p&gt;</a>
+      {{ else }}
+        <a href="/p" class="text-teal-400 hover:text-teal-200">Show &lt;p&gt;</a>
+      {{ end }}
+    </div>
+  </div>
 
-{{ if .ShowsParagraphs }}
-  <a href="/">Hide Paragraphs</a>
-{{ else }}
-  <a href="/p">Show Paragraphs</a>
-{{ end }}
+  <div class="p-4 bg-gray-800 shadow-md rounded">
+    <h2 class="text-3xl mb-4">{{ .Source}}</h2>
+    {{ range .Paragraphs }}
+      <p class="mb-3">{{ . }}</p>
+    {{ end }}
+  </div>
+</div>
 
 </body>
 </html>
