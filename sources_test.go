@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestSourceJsonFiles(t *testing.T) {
 	sources := getSources()
+
+	fmt.Printf("Testing %v source files\n", len(sources.Sources))
 
 	for _, sourceFile := range sources.Sources {
 		source, err := getSourceContent(sourceFile)
@@ -28,5 +31,19 @@ func TestSourceJsonFiles(t *testing.T) {
 				t.Errorf("Paragraph %v the %v file is empty", index, sourceFile)
 			}
 		}
+	}
+}
+
+func TestNumLinesFunction(t *testing.T) {
+	source := getNumLines(5, false)
+
+	if len(source.Paragraphs) != 5 {
+		t.Errorf("%v paragraphs returned, exptected %v", len(source.Paragraphs), 5)
+	}
+
+	source2 := getNumLines(50, false)
+
+	if len(source2.Paragraphs) != 50 {
+		t.Errorf("%v paragraphs returned, exptected %v", len(source2.Paragraphs), 50)
 	}
 }

@@ -59,8 +59,8 @@ func getRandomContent(addParagraphs bool) Source {
 	return source
 }
 
-func getNumLines(amount int, stripParagraphs bool) Source {
-	source := getRandomContent(stripParagraphs)
+func getNumLines(amount int, addParagraphs bool) Source {
+	source := getRandomContent(addParagraphs)
 
 	// Fill results with random lines from the results by appending random lines
 	for len(source.Paragraphs) < amount {
