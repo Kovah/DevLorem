@@ -15,5 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-go@v2
+      - name: Install required packages
+        run: go get github.com/gorilla/mux
       - name: Build and test with Go
         run: go test ./...
