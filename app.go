@@ -5,88 +5,20 @@ import (
 	"github.com/gorilla/mux"
 	"html/template"
 	"io"
-	"io/ioutil"
-	"math/rand"
 	"net/http"
 	"strconv"
 	texttemplate "text/template"
-	"time"
 )
-
-type Sources struct {
-	Sources []string
-}
-
-type Source struct {
-	Source     string
-	Paragraphs []string
-}
 
 type Output struct {
 	Source          Source
 	ShowsParagraphs bool
 }
 
-type JsonOutput struct {
-	Source     string   `json:"source"`
-	Paragraphs []string `json:"paragraphs"`
-}
-
 func check(e error) {
 	if e != nil {
 		panic(e)
 	}
-}
-
-func getSources() Sources {
-	sourceDir, err := ioutil.ReadDir("lorem")
-	check(err)
-
-	sources := Sources{}
-	for _, entry := range sourceDir {
-		sources.Sources = append(sources.Sources, entry.Name())
-	}
-
-	return sources
-}
-
-func getRandomContent(addParagraphs bool) Source {
-	sources := getSources()
-	sourceFile := sources.Sources[rand.Intn(len(sources.Sources))]
-
-	content, err := ioutil.ReadFile("lorem/" + sourceFile)
-	check(err)
-
-	var source Source
-	json.Unmarshal(content, &source)
-
-	if addParagraphs {
-		for i, paragraph := range source.Paragraphs {
-			source.Paragraphs[i] = "<p>" + paragraph + "</p>"
-		}
-	}
-
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(source.Paragraphs), func(i, j int) {
-		source.Paragraphs[i], source.Paragraphs[j] = source.Paragraphs[j], source.Paragraphs[i]
-	})
-
-	return source
-}
-
-func getNumLines(amount int, stripParagraphs bool) Source {
-	source := getRandomContent(stripParagraphs)
-
-	// Fill results with random lines from the results by appending random lines
-	for len(source.Paragraphs) < amount {
-		rand.Seed(time.Now().UnixNano())
-		source.Paragraphs = append(source.Paragraphs, source.Paragraphs[rand.Intn(len(source.Paragraphs))])
-	}
-
-	// Limit number of returned lines to the given amount
-	source.Paragraphs = source.Paragraphs[0:amount]
-
-	return source
 }
 
 func main() {
