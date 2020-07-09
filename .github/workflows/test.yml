@@ -18,4 +18,4 @@ jobs:
       - name: Install required packages
         run: go get github.com/gorilla/mux
       - name: Build and test with Go
-        run: go test ./...
+        run: go test -run ''
