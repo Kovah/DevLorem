@@ -21,5 +21,6 @@ jobs:
         run: |
           mkdir /home/runner/go/src/github.com/Kovah
           ln -s . /home/runner/go/src/github.com/Kovah/DevLorem
+          ls -la /home/runner/go/src/github.com/Kovah
       - name: Build and test with Go
         run: go test -run ''
