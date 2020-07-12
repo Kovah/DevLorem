@@ -1,9 +1,7 @@
-package cmd
+package main
 
 import (
 	"encoding/json"
-	"github.com/Kovah/DevLorem/helper"
-	"github.com/Kovah/DevLorem/sources"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 	"html/template"
@@ -14,7 +12,7 @@ import (
 )
 
 type Output struct {
-	Source          sources.Source
+	Source          Source
 	ShowsParagraphs bool
 }
 
@@ -44,7 +42,7 @@ func handleHttpServer() {
 
 	// Handle the base webpage with generated paragraphs
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		source := sources.GetRandomContent(false)
+		source := GetRandomContent(false)
 
 		output := Output{
 			Source:          source,
@@ -56,7 +54,7 @@ func handleHttpServer() {
 
 	// Handle the base webpage with generated paragraphs and show the paragraph tags in the results
 	r.HandleFunc("/p", func(w http.ResponseWriter, r *http.Request) {
-		source := sources.GetRandomContent(true)
+		source := GetRandomContent(true)
 
 		output := Output{
 			Source:          source,
@@ -76,9 +74,9 @@ func handleHttpServer() {
 		query := r.URL.Query()
 
 		amount, err := strconv.Atoi(vars["amount"])
-		helper.Check(err)
+		Check(err)
 
-		source := sources.GetNumLines(amount, query.Get("paragraphs") != "true")
+		source := GetNumLines(amount, query.Get("paragraphs") != "true")
 
 		if query.Get("format") == "text" {
 			rawTmpl.Execute(w, source)
@@ -95,5 +93,5 @@ func handleHttpServer() {
 	})
 
 	err := http.ListenAndServe(":80", r)
-	helper.Check(err)
+	Check(err)
 }

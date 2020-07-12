@@ -1,8 +1,7 @@
-package sources
+package main
 
 import (
 	"encoding/json"
-	"github.com/Kovah/DevLorem/helper"
 	"io/ioutil"
 	"math/rand"
 	"time"
@@ -19,7 +18,7 @@ type Source struct {
 
 func GetSources() Sources {
 	sourceDir, err := ioutil.ReadDir("./lorem")
-	helper.Check(err)
+	Check(err)
 
 	sources := Sources{}
 	for _, entry := range sourceDir {
@@ -31,7 +30,7 @@ func GetSources() Sources {
 
 func GetSourceContent(sourceFile string) (Source, error) {
 	content, err := ioutil.ReadFile("./lorem/" + sourceFile)
-	helper.Check(err)
+	Check(err)
 
 	var source Source
 	err = json.Unmarshal(content, &source)
@@ -44,7 +43,7 @@ func GetRandomContent(addParagraphs bool) Source {
 	sourceFile := sources.Sources[rand.Intn(len(sources.Sources))]
 
 	source, err := GetSourceContent(sourceFile)
-	helper.Check(err)
+	Check(err)
 
 	if addParagraphs {
 		for i, paragraph := range source.Paragraphs {

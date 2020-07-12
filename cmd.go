@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!`,
 	},
 }
 
-func Execute() {
+func CmdExecute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
