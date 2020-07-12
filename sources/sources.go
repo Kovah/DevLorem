@@ -18,7 +18,7 @@ type Source struct {
 }
 
 func GetSources() Sources {
-	sourceDir, err := ioutil.ReadDir("lorem")
+	sourceDir, err := ioutil.ReadDir("./lorem")
 	helper.Check(err)
 
 	sources := Sources{}
@@ -30,7 +30,7 @@ func GetSources() Sources {
 }
 
 func GetSourceContent(sourceFile string) (Source, error) {
-	content, err := ioutil.ReadFile("lorem/" + sourceFile)
+	content, err := ioutil.ReadFile("./lorem/" + sourceFile)
 	helper.Check(err)
 
 	var source Source
