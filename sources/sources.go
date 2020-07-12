@@ -1,7 +1,8 @@
-package main
+package sources
 
 import (
 	"encoding/json"
+	"github.com/Kovah/DevLorem/helper"
 	"io/ioutil"
 	"math/rand"
 	"time"
@@ -16,9 +17,9 @@ type Source struct {
 	Paragraphs []string
 }
 
-func getSources() Sources {
+func GetSources() Sources {
 	sourceDir, err := ioutil.ReadDir("lorem")
-	check(err)
+	helper.Check(err)
 
 	sources := Sources{}
 	for _, entry := range sourceDir {
@@ -28,9 +29,9 @@ func getSources() Sources {
 	return sources
 }
 
-func getSourceContent(sourceFile string) (Source, error) {
+func GetSourceContent(sourceFile string) (Source, error) {
 	content, err := ioutil.ReadFile("lorem/" + sourceFile)
-	check(err)
+	helper.Check(err)
 
 	var source Source
 	err = json.Unmarshal(content, &source)
@@ -38,12 +39,12 @@ func getSourceContent(sourceFile string) (Source, error) {
 	return source, err
 }
 
-func getRandomContent(addParagraphs bool) Source {
-	sources := getSources()
+func GetRandomContent(addParagraphs bool) Source {
+	sources := GetSources()
 	sourceFile := sources.Sources[rand.Intn(len(sources.Sources))]
 
-	source, err := getSourceContent(sourceFile)
-	check(err)
+	source, err := GetSourceContent(sourceFile)
+	helper.Check(err)
 
 	if addParagraphs {
 		for i, paragraph := range source.Paragraphs {
@@ -59,8 +60,8 @@ func getRandomContent(addParagraphs bool) Source {
 	return source
 }
 
-func getNumLines(amount int, addParagraphs bool) Source {
-	source := getRandomContent(addParagraphs)
+func GetNumLines(amount int, addParagraphs bool) Source {
+	source := GetRandomContent(addParagraphs)
 
 	// Fill results with random lines from the results by appending random lines
 	for len(source.Paragraphs) < amount {
