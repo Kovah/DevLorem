@@ -16,7 +16,9 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-go@v2
       - name: Install required packages
-        run: go get github.com/gorilla/mux
+        run: |
+          go get github.com/gorilla/mux
+          go get github.com/spf13/cobra
       - name: Link main repo as package
         run: |
           mkdir /home/runner/go/src/github.com/Kovah
