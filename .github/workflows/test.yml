@@ -24,4 +24,6 @@ jobs:
           mkdir /home/runner/go/src/github.com/Kovah
           ln -s /home/runner/work/DevLorem/DevLorem /home/runner/go/src/github.com/Kovah/DevLorem
       - name: Build and test with Go
-        run: go test -run ''
+        run: |
+          go test github.com/Kovah/DevLorem/helper
+          go test github.com/Kovah/DevLorem/sources
