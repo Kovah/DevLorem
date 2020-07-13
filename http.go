@@ -11,6 +11,8 @@ import (
 	texttemplate "text/template"
 )
 
+var bindHost string
+
 type Output struct {
 	Source          Source
 	ShowsParagraphs bool
@@ -18,6 +20,8 @@ type Output struct {
 
 func init() {
 	rootCmd.AddCommand(httpCmd)
+
+	httpCmd.Flags().StringVarP(&bindHost, "bind", "b", ":80", "Bind the HTTP server to a specific host and port, default is :80")
 }
 
 var httpCmd = &cobra.Command{
@@ -92,6 +96,6 @@ func handleHttpServer() {
 		io.WriteString(w, "You can only request up to 99 paragraphs in one request.")
 	})
 
-	err := http.ListenAndServe(":80", r)
+	err := http.ListenAndServe(bindHost, r)
 	Check(err)
 }
