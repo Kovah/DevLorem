@@ -12,8 +12,8 @@ type Sources struct {
 }
 
 type Source struct {
-	Source     string
-	Paragraphs []string
+	Source     string   `json:"source"`
+	Paragraphs []string `json:"paragraphs"`
 }
 
 func GetSources() Sources {

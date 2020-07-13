@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 	"html/template"
 	"io"
 	"net/http"
+	"os"
 	"strconv"
 	texttemplate "text/template"
 )
@@ -30,11 +32,15 @@ var httpCmd = &cobra.Command{
 	Long:  `Run the DevLorem website as a simple HTTP server.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Print("Starting HTTP server for DevLorem...\n")
-		handleHttpServer()
+
+		if err := handleHttpServer(); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
-func handleHttpServer() {
+func handleHttpServer() error {
 	r := mux.NewRouter()
 
 	// Handle static assets
@@ -97,5 +103,5 @@ func handleHttpServer() {
 	})
 
 	err := http.ListenAndServe(bindHost, r)
-	Check(err)
+	return err
 }
