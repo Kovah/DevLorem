@@ -8,9 +8,9 @@ import (
 func TestSourceJsonFiles(t *testing.T) {
 	sources := GetSources()
 
-	fmt.Printf("Testing %v source files\n", len(sources.Sources))
+	fmt.Printf("Testing %v source files\n", len(sources))
 
-	for _, sourceFile := range sources.Sources {
+	for _, sourceFile := range sources {
 		source, err := GetSourceContent(sourceFile)
 
 		if err != nil {
