@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
 	"html/template"
@@ -44,10 +45,15 @@ func handleHttpServer() error {
 	r := mux.NewRouter()
 
 	// Handle static assets
-	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("assets/dist"))))
+	static := rice.MustFindBox("assets/dist")
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(static.HTTPBox())))
 
 	// Prepare both the HTML and plain text template
-	tmpl := template.Must(template.ParseFiles("template.html"))
+	templateBox := rice.MustFindBox("templates")
+	templateString := templateBox.MustString("template.html")
+	tmpl, err := template.New("app").Parse(templateString)
+	Check(err)
+
 	rawTmpl := texttemplate.Must(texttemplate.New("test").Parse("{{.Source}}\n{{range .Paragraphs}}{{.}}\n{{end}}"))
 
 	// Handle the base webpage with generated paragraphs
@@ -102,6 +108,6 @@ func handleHttpServer() error {
 		io.WriteString(w, "You can only request up to 99 paragraphs in one request.")
 	})
 
-	err := http.ListenAndServe(bindHost, r)
+	err = http.ListenAndServe(bindHost, r)
 	return err
 }
