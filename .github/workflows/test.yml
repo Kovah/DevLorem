@@ -23,7 +23,7 @@ jobs:
 
       - name: Link main repo as package
         run: |
-          mkdir /home/runner/go/src/github.com/Kovah
+          mkdir -p /home/runner/go/src/github.com/Kovah
           ln -s /home/runner/work/DevLorem/DevLorem /home/runner/go/src/github.com/Kovah/DevLorem
 
       - name: Build and test with Go
