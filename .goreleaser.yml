@@ -1,0 +1,41 @@
+project_name: devlorem
+
+before:
+  hooks:
+    - go mod download
+    - go generate ./...
+    - rice embed-go
+
+builds:
+-
+  id: devlorem
+  binary: devlorem
+  env:
+    - CGO_ENABLED=0
+
+archives:
+-
+  name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+  files:
+    - README.md
+    - LICENSE.md
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  name_template: "{{.Tag}}"
+
+dockers:
+  - image_templates:
+      - "kovah/devlorem:latest"
+      - "kovah/devlorem:{{.Version}}"
+
+changelog:
+  sort: asc
