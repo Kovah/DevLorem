@@ -50,8 +50,8 @@ func handleHttpServer() error {
 
 	// Prepare both the HTML and plain text template
 	templateBox := rice.MustFindBox("templates")
-	templateString := templateBox.MustString("template.html")
-	tmpl, err := template.New("app").Parse(templateString)
+	templateString := templateBox.MustString("index.html")
+	tmpl, err := template.New("index").Parse(templateString)
 	Check(err)
 
 	rawTmpl := texttemplate.Must(texttemplate.New("test").Parse("{{.Source}}\n{{range .Paragraphs}}{{.}}\n{{end}}"))
