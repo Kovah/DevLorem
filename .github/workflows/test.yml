@@ -1,0 +1,30 @@
+name: Test with Go
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+
+      - name: Install required packages
+        run: go mod download
+
+      - name: Link main repo as package
+        run: |
+          mkdir -p /home/runner/go/src/github.com/Kovah
+          ln -s /home/runner/work/DevLorem/DevLorem /home/runner/go/src/github.com/Kovah/DevLorem
+
+      - name: Build and test with Go
+        run: go test -run ''

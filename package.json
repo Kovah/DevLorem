@@ -1,0 +1,25 @@
+{
+  "name": "devlorem",
+  "version": "2.0.0",
+  "description": "Show paragraphs of real text ready to copy and paste. No more \"Lorem ipsum dolor\", get some lines from President Obama,  Jim Carrey or Morgan Freeman.",
+  "author": "Kevin Woblick <mail@kovah.de>",
+  "license": "MIT",
+  "homepage": "https://devlorem.kovah.de",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kovah/DevLorem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kovah/DevLorem/issues"
+  },
+  "scripts": {
+    "build": "postcss assets/styles.scss -o assets/dist/styles.css",
+    "build-prod": "NODE_ENV=production postcss assets/styles.scss -o assets/dist/styles.css"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "postcss": "^7.0.32",
+    "postcss-cli": "^7.1.1",
+    "tailwindcss": "^1.4.6"
+  }
+}
