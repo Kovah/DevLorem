@@ -29,10 +29,10 @@ func init() {
 
 var httpCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Run the DevLorem website as a simple HTTP server.",
-	Long:  `Run the DevLorem website as a simple HTTP server.`,
+	Short: "Run the DevLorem website as a HTTP server.",
+	Long:  `Run the DevLorem website as a HTTP server. The HTTP server also serves the web API.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Print("Starting HTTP server for DevLorem...\n")
+		cmd.Printf("Starting HTTP server for DevLorem on %v...\n", bindHost)
 
 		if err := handleHttpServer(); err != nil {
 			fmt.Println(err)
