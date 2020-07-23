@@ -65,7 +65,8 @@ func handleHttpServer() error {
 			ShowsParagraphs: false,
 		}
 
-		tmpl.Execute(w, output)
+		err = tmpl.Execute(w, output)
+		Check(err)
 	})
 
 	// Handle the base webpage with generated paragraphs and show the paragraph tags in the results
@@ -77,7 +78,8 @@ func handleHttpServer() error {
 			ShowsParagraphs: true,
 		}
 
-		tmpl.Execute(w, output)
+		err = tmpl.Execute(w, output)
+		Check(err)
 	})
 
 	// Handle API calls
@@ -95,17 +97,20 @@ func handleHttpServer() error {
 		source := GetNumLines(amount, query.Get("paragraphs") != "true")
 
 		if query.Get("format") == "text" {
-			rawTmpl.Execute(w, source)
+			err = rawTmpl.Execute(w, source)
+			Check(err)
 		} else {
 			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(source)
+			err = json.NewEncoder(w).Encode(source)
+			Check(err)
 		}
 	})
 
 	// Additional API endpoint for returning proper errors if <amount> is larger than 99
 	r.HandleFunc("/api/{amount:[0-9]{3}}", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		io.WriteString(w, "You can only request up to 99 paragraphs in one request.")
+		_, err := io.WriteString(w, "You can only request up to 99 paragraphs in one request.")
+		Check(err)
 	})
 
 	err = http.ListenAndServe(bindHost, r)

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 )
 
 var format []string
@@ -26,8 +25,7 @@ var cliCmd = &cobra.Command{
 	Long:  `Generate quotes directly in the CLI. You can specify the number of paragraphs, if paragraph tags should be included, as well as the format.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := handleCliGenerator(); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			Check(err)
 		}
 	},
 }
