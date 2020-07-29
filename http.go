@@ -15,6 +15,7 @@ import (
 )
 
 var bindHost string
+var useEnvPort bool
 
 type Output struct {
 	Source          Source
@@ -25,6 +26,7 @@ func init() {
 	rootCmd.AddCommand(httpCmd)
 
 	httpCmd.Flags().StringVarP(&bindHost, "bind", "b", ":80", "Bind the HTTP server to a specific host and port, default is :80")
+	httpCmd.Flags().BoolVar(&useEnvPort, "env-port", false, "Bind the HTTP server to the port specified in the environment variable $PORT")
 }
 
 var httpCmd = &cobra.Command{
@@ -32,6 +34,10 @@ var httpCmd = &cobra.Command{
 	Short: "Run the DevLorem website as a HTTP server.",
 	Long:  `Run the DevLorem website as a HTTP server. The HTTP server also serves the web API.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if useEnvPort {
+			bindHost = ":" + os.Getenv("PORT")
+		}
+
 		cmd.Printf("Starting HTTP server for DevLorem on %v...\n", bindHost)
 
 		if err := handleHttpServer(); err != nil {
