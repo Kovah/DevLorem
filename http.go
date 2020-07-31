@@ -77,7 +77,7 @@ func handleHttpServer() error {
 
 	// Handle the base webpage with generated paragraphs and show the paragraph tags in the results
 	r.HandleFunc("/p", func(w http.ResponseWriter, r *http.Request) {
-		source := GetRandomContent(true)
+		source := GetRandomContent(false)
 
 		output := Output{
 			Source:          source,

@@ -20,11 +20,7 @@ a:active {
   @apply text-teal-200;
 }
 
-.content p {
-  position: relative;
-}
-
-.content p:after {
+.paragraph:after {
    content: 'Copied!';
    position: absolute;
    top: 0;
@@ -38,8 +34,14 @@ a:active {
    transition: opacity 200ms ease;
 }
 
-.content p.success:after {
+.paragraph.success:after {
    opacity: 1;
+}
+
+.copy-paragraph:hover,
+.sentence:hover {
+  @apply bg-teal-900;
+  outline: 2px solid #234e52;
 }
 
 @tailwind components;

@@ -52,7 +52,10 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
     </div>
     <div class="content">
       {{ range .Source.Paragraphs }}
-        <p class="mb-4">{{ . }}</p>
+        <div class="paragraph mb-4 cursor-pointer relative flex">
+          <span class="copy-paragraph {{ if not $.ShowsParagraphs }}text-gray-500{{ end }} font-smaller mr-1">&lt;p&gt;</span>
+          <p class="inline-block">{{ . }}</p>
+        </div>
       {{ end }}
     </div>
   </div>
@@ -77,38 +80,46 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
 
 <script src="/static/clipboard.min.js"></script>
 <script>
-  var paragraphs = document.querySelectorAll('.content p');
+  function displaySuccess($el) {
+    $el.classList.remove('success');
+    $el.classList.add('success');
+    setTimeout(function () {
+      $el.classList.remove('success');
+    }, 2000);
+  }
+
+  var paragraphs = document.querySelectorAll('.paragraph');
   paragraphs.forEach(function ($paragraph) {
-    var clipboard = new ClipboardJS($paragraph, {
+    var $paragraphContent = $paragraph.querySelector('p');
+    var sentences = $paragraphContent.textContent.match(/[^.!?]+[.!?"]+/g);
+
+    $paragraphContent.innerHTML = sentences.map(function (sentence) {
+      return `<span class="sentence">${sentence.trim()}</span>`
+    }).join(' ')
+
+    // Sentences
+    $paragraph.querySelectorAll('.sentence').forEach(function ($sentence) {
+      var clipboard = new ClipboardJS($sentence, {
+        text: function (trigger) {
+          return trigger.innerText;
+        }
+      });
+
+      clipboard.on('success', function (e) {
+        displaySuccess($paragraph)
+      });
+    });
+
+    // Whole paragraph
+    var paragraphClipboard = new ClipboardJS($paragraph.querySelector('.copy-paragraph'), {
       text: function (trigger) {
-        return trigger.innerHTML;
+        var copyParagaphs = document.querySelector('[name="copy-paragraphs"]').content === 'true'
+        return copyParagaphs ? `<p>${$paragraphContent.innerText}</p>` : $paragraphContent.innerText;
       }
     });
 
-    clipboard.on('success', function (e) {
-      e.trigger.classList.remove('success');
-      e.trigger.classList.add('success');
-      setTimeout(function () {
-        e.trigger.classList.remove('success');
-      }, 2000);
-    });
-
-    $paragraph.addEventListener('click', function (e) {
-      if (document.body.createTextRange) {
-        const range = document.body.createTextRange();
-        range.moveToElementText(e.currentTarget);
-        range.select();
-        document.execCommand('copy');
-      } else if (window.getSelection) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(e.currentTarget);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        document.execCommand('copy');
-      } else {
-        console.warn('Could not select text in node: Unsupported browser.');
-      }
+    paragraphClipboard.on('success', function (e) {
+      displaySuccess($paragraph)
     });
   });
 </script>
