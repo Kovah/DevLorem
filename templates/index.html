@@ -2,23 +2,39 @@
 <html lang="en" class="min-h-full bg-gray-900 text-gray-100" style="background-color: #1d1f23; color: #f8f9fa">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="copy-paragraphs" content="{{ .ShowsParagraphs }}">
+
   <title>DevLorem</title>
   <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" href="/static/favicon.svg">
+
+  <meta property="og:title" content="DevLorem" />
+  <meta property="og:url" content="https://devlorem.kovah.de/" />
+  <meta property="og:description" content="Real quotes ready to copy and paste. No more 'Lorem ipsum dolor'. Get some quotes from President Obama,
+Samuel L Jackson, Daisy Ridley or Morgan Freeman!" />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DevLorem">
+  <meta name="twitter:description" content="Real quotes ready to copy and paste. No more 'Lorem ipsum dolor'. Get some quotes from President Obama,
+Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
+  <meta name="twitter:creator" content="@kovah_kvh">
 </head>
 <body>
 
-<div class="container mx-auto px-2 md:px-4">
+<div class="container mx-auto px-4 xl:max-w-5xl">
 
-  <div class="py-12 px-6 flex items-center">
-    <h1 class="text-2xl font-bold inline-block mr-6">DevLorem</h1>
-    <div class="ml-auto text-xs text-right">
+  <div class="py-12 px-6 sm:flex items-center">
+    <h1 class="text-2xl font-bold inline-block mb-4 sm:mb-0 sm:mr-6">DevLorem</h1>
+    <div class="ml-auto text-xs sm:text-right">
       {{ if .ShowsParagraphs }}
         <a href="/">Hide &lt;p&gt;</a>
       {{ else }}
         <a href="/p">Show &lt;p&gt;</a>
       {{ end }}
       <br>
-      <span class="text-gray-500">Click a paragraph to copy it</span>
+      <span class="text-gray-500">Click a sentence or the &lt;p&gt; to copy</span>
     </div>
   </div>
 
@@ -36,7 +52,10 @@
     </div>
     <div class="content">
       {{ range .Source.Paragraphs }}
-        <p class="mb-4">{{ . }}</p>
+        <div class="paragraph mb-4 cursor-pointer relative flex">
+          <span class="copy-paragraph {{ if not $.ShowsParagraphs }}text-gray-500{{ end }} font-smaller mr-1">&lt;p&gt;</span>
+          <p class="inline-block">{{ . }}</p>
+        </div>
       {{ end }}
     </div>
   </div>
@@ -61,38 +80,46 @@
 
 <script src="/static/clipboard.min.js"></script>
 <script>
-  var paragraphs = document.querySelectorAll('.content p');
+  function displaySuccess($el) {
+    $el.classList.remove('success');
+    $el.classList.add('success');
+    setTimeout(function () {
+      $el.classList.remove('success');
+    }, 2000);
+  }
+
+  var paragraphs = document.querySelectorAll('.paragraph');
   paragraphs.forEach(function ($paragraph) {
-    var clipboard = new ClipboardJS($paragraph, {
+    var $paragraphContent = $paragraph.querySelector('p');
+    var sentences = $paragraphContent.textContent.match(/[^.!?]+[.!?"]+/g);
+
+    $paragraphContent.innerHTML = sentences.map(function (sentence) {
+      return `<span class="sentence">${sentence.trim()}</span>`
+    }).join(' ')
+
+    // Sentences
+    $paragraph.querySelectorAll('.sentence').forEach(function ($sentence) {
+      var clipboard = new ClipboardJS($sentence, {
+        text: function (trigger) {
+          return trigger.innerText;
+        }
+      });
+
+      clipboard.on('success', function (e) {
+        displaySuccess($paragraph)
+      });
+    });
+
+    // Whole paragraph
+    var paragraphClipboard = new ClipboardJS($paragraph.querySelector('.copy-paragraph'), {
       text: function (trigger) {
-        return trigger.innerHTML;
+        var copyParagaphs = document.querySelector('[name="copy-paragraphs"]').content === 'true'
+        return copyParagaphs ? `<p>${$paragraphContent.innerText}</p>` : $paragraphContent.innerText;
       }
     });
 
-    clipboard.on('success', function (e) {
-      e.trigger.classList.remove('success');
-      e.trigger.classList.add('success');
-      setTimeout(function () {
-        e.trigger.classList.remove('success');
-      }, 2000);
-    });
-
-    $paragraph.addEventListener('click', function (e) {
-      if (document.body.createTextRange) {
-        const range = document.body.createTextRange();
-        range.moveToElementText(e.currentTarget);
-        range.select();
-        document.execCommand('copy');
-      } else if (window.getSelection) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(e.currentTarget);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        document.execCommand('copy');
-      } else {
-        console.warn('Could not select text in node: Unsupported browser.');
-      }
+    paragraphClipboard.on('success', function (e) {
+      displaySuccess($paragraph)
     });
   });
 </script>
