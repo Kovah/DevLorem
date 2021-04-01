@@ -154,7 +154,7 @@ You need the following packages on your machine to be able to work on DevLorem a
 
 This can be done by running `go mod download` in the current project directory.
 
-To test the package, compile it and then run the resulting executable. I recommend using [Goland]()
+To test the package, compile it and then run the resulting executable. I recommend using Goland
 for local development. 
 
 
@@ -163,6 +163,7 @@ for local development.
 To compile the binary and run it locally in the same folder, run the following command:
 
 ```
+npm run build-prod
 go build
 ```
 
@@ -171,6 +172,11 @@ To generate a single binary without any dependencies, you have to generate the n
 rice embed-go
 # then run the build command
 go build
+```
+
+To test the current source code, run the following command:
+```
+go test -run ''
 ```
 
 
