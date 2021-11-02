@@ -34,7 +34,7 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
         <a href="/p">Show &lt;p&gt;</a>
       {{ end }}
       <br>
-      <span class="text-gray-500">Click a sentence or the &lt;p&gt; to copy</span>
+      <span class="text-gray-400">Click a sentence or the &lt;p&gt; to copy</span>
     </div>
   </div>
 
@@ -53,8 +53,8 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
     <div class="content">
       {{ range .Source.Paragraphs }}
         <div class="paragraph mb-4 cursor-pointer relative flex">
-          <span class="copy-paragraph {{ if not $.ShowsParagraphs }}text-gray-500{{ end }} font-smaller mr-1">&lt;p&gt;</span>
-          <p class="inline-block">{{ . }}</p>
+          <span class="copy-paragraph {{ if not $.ShowsParagraphs }}text-gray-400{{ end }} font-smaller mr-1">&lt;p&gt;</span>
+          <p class="inline-block text-gray-300">{{ . }}</p>
         </div>
       {{ end }}
     </div>
@@ -62,7 +62,7 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
 
   <div class="pt-10 px-6 text-gray-400">
     <h2>DevLorem API</h2>
-    <code class="inline-block py-1 px-2 my-2 text-sm bg-teal-900 text-teal-400 rounded-sm">devlorem.kovah.de/api/[amount of paragraphs]</code>
+    <code class="inline-block py-1 px-2 my-2 text-sm bg-teal-500 text-teal-300 rounded-sm bg-opacity-20">devlorem.kovah.de/api/[amount of paragraphs]</code>
     <ul class="text-xs">
       <li>The results will be returned as JSON by default.</li>
       <li>Append <code class="text-teal-400">paragraphs=true</code> as a query parameter to show paragraph tags in the output.</li>

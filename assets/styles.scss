@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   @apply font-mono;
@@ -40,9 +42,6 @@ a:active {
 
 .copy-paragraph:hover,
 .sentence:hover {
-  @apply bg-teal-900;
+  @apply bg-teal-800;
   outline: 2px solid #234e52;
 }
-
-@tailwind components;
-@tailwind utilities;
