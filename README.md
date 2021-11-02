@@ -134,7 +134,7 @@ Want to contribute more source texts? Please create a pull request for the new f
 styling like the ones that are already available:
 
 * Filename must contain the name (lowercase, spaces replaced with dashes).
-* The JSON strcuture must match the existing files.
+* The JSON structure must match the existing files.
 * Do not use any <p> tags in the quotes.
 
 
