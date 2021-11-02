@@ -64,7 +64,7 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
     <h2>DevLorem API</h2>
     <code class="inline-block py-1 px-2 my-2 text-sm bg-teal-900 text-teal-400 rounded-sm">devlorem.kovah.de/api/[amount of paragraphs]</code>
     <ul class="text-xs">
-      <li>The results will be returns as Json by default.</li>
+      <li>The results will be returned as JSON by default.</li>
       <li>Append <code class="text-teal-400">paragraphs=true</code> as a query parameter to show paragraph tags in the output.</li>
       <li>Append <code class="text-teal-400">format=text</code> as a query parameter to get plain text output.</li>
     </ul>
@@ -113,8 +113,8 @@ Samuel L Jackson, Daisy Ridley or Morgan Freeman!">
     // Whole paragraph
     var paragraphClipboard = new ClipboardJS($paragraph.querySelector('.copy-paragraph'), {
       text: function (trigger) {
-        var copyParagaphs = document.querySelector('[name="copy-paragraphs"]').content === 'true'
-        return copyParagaphs ? `<p>${$paragraphContent.innerText}</p>` : $paragraphContent.innerText;
+        var copyParagraphs = document.querySelector('[name="copy-paragraphs"]').content === 'true'
+        return copyParagraphs ? `<p>${$paragraphContent.innerText}</p>` : $paragraphContent.innerText;
       }
     });
 
