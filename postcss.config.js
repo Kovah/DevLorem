@@ -4,7 +4,7 @@ const cssnano = require('cssnano')({
 
 module.exports = {
   plugins: [
-    require('tailwindcss'),
+    "@tailwindcss/postcss",
     require('autoprefixer'),
     ...process.env.NODE_ENV === 'production'
       ? [cssnano]
